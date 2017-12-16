@@ -1,8 +1,11 @@
 # autosolution
+
 Project Description
+
 Generate Visual Studio solution files and fixup project files to use project references. This tool makes it easy to maintain correct dependencies in projects and Visual Studio solutions. It's also great to generate large refactoring solutions with all projects in many directories
 
 How to Use
+
 AutoSolution is contained in a single executable that can be run in a simple command line mode, or interactively as a windows desktop application.
 
 It can generate project files with project references and solution files with all the required projects by recursively descending into a directory structure.
