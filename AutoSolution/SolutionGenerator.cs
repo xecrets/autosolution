@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with AutoSolution.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * The source is maintained at http://autosolution.codeplex.com/ please visit for
  * updates, contributions and contact with the author. You may also visit
  * http://www.axantum.com for more information about the author.
@@ -158,8 +158,8 @@ namespace Axantum.AutoSolution
             _isProjectIncluded = isProjectIncluded;
 
             // Default report to empty air
-            ProgressReporter = delegate(string msg) { };
-            ErrorReporter = delegate(string msg) { };
+            ProgressReporter = delegate (string msg) { };
+            ErrorReporter = delegate (string msg) { };
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace Axantum.AutoSolution
 
                 if (isProjectIncluded(project))
                 {
-                    MakeAutoSolution(Path.GetDirectoryName(project.FileName), Path.GetFileNameWithoutExtension(project.FileName), delegate(ProjectInfo pi) { return pi == project; });
+                    MakeAutoSolution(Path.GetDirectoryName(project.FileName), Path.GetFileNameWithoutExtension(project.FileName), delegate (ProjectInfo pi) { return pi == project; });
                 }
             }
         }
@@ -591,7 +591,7 @@ namespace Axantum.AutoSolution
             XmlNodeList assemblyReferences = project.SelectNodes("//msbuild:ItemGroup/msbuild:Reference", xnm);
             foreach (XmlNode assemblyReference in assemblyReferences)
             {
-                string referencedAssemblyName = assemblyReference.Attributes["Include"].Value;
+                string referencedAssemblyName = assemblyReference.Attributes["Include"]?.Value;
                 if (!String.IsNullOrEmpty(referencedAssemblyName))
                 {
                     info.References.Add(new AssemblyName(referencedAssemblyName));
