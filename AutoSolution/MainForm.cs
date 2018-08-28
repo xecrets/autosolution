@@ -232,6 +232,7 @@ namespace Axantum.AutoSolution
         {
             _cleanPresenter.CleanBin = checkBoxBin.Checked;
             _cleanPresenter.CleanObj = checkBoxCleanObj.Checked;
+            _cleanPresenter.CleanPackages = checkBoxCleanPackages.Checked;
             _cleanPresenter.CleanSolutions = checkBoxCleanAutoSolutions.Checked;
             _cleanPresenter.RootDirectory = textBoxRootDirectory.Text;
             _cleanPresenter.IgnoreDirectories = FoldersToIgnore;

@@ -38,6 +38,8 @@
             this.tabControlFeature = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBoxMode = new System.Windows.Forms.GroupBox();
+            this.textBoxSuperSolutionNameBase = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.radioButtonSuperSolution = new System.Windows.Forms.RadioButton();
             this.radioButtonRecursive = new System.Windows.Forms.RadioButton();
             this.buttonRun = new System.Windows.Forms.Button();
@@ -51,8 +53,7 @@
             this.textBoxProgress = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxIgnoreFolders = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBoxSuperSolutionNameBase = new System.Windows.Forms.TextBox();
+            this.checkBoxCleanPackages = new System.Windows.Forms.CheckBox();
             this.tabControlFeature.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxMode.SuspendLayout();
@@ -138,6 +139,23 @@
             this.groupBoxMode.TabStop = false;
             this.groupBoxMode.Text = "Mode";
             // 
+            // textBoxSuperSolutionNameBase
+            // 
+            this.textBoxSuperSolutionNameBase.Location = new System.Drawing.Point(246, 42);
+            this.textBoxSuperSolutionNameBase.Name = "textBoxSuperSolutionNameBase";
+            this.textBoxSuperSolutionNameBase.Size = new System.Drawing.Size(161, 20);
+            this.textBoxSuperSolutionNameBase.TabIndex = 15;
+            this.textBoxSuperSolutionNameBase.TextChanged += new System.EventHandler(this.textBoxSuperSolutionNameBase_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(134, 45);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(106, 13);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Solution Name Base:";
+            // 
             // radioButtonSuperSolution
             // 
             this.radioButtonSuperSolution.AutoSize = true;
@@ -192,6 +210,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.checkBoxCleanPackages);
             this.tabPage2.Controls.Add(this.checkBoxCleanAutoSolutions);
             this.tabPage2.Controls.Add(this.checkBoxCleanObj);
             this.tabPage2.Controls.Add(this.checkBoxBin);
@@ -209,7 +228,7 @@
             this.checkBoxCleanAutoSolutions.AutoSize = true;
             this.checkBoxCleanAutoSolutions.Checked = true;
             this.checkBoxCleanAutoSolutions.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxCleanAutoSolutions.Location = new System.Drawing.Point(25, 56);
+            this.checkBoxCleanAutoSolutions.Location = new System.Drawing.Point(25, 78);
             this.checkBoxCleanAutoSolutions.Name = "checkBoxCleanAutoSolutions";
             this.checkBoxCleanAutoSolutions.Size = new System.Drawing.Size(234, 17);
             this.checkBoxCleanAutoSolutions.TabIndex = 11;
@@ -245,7 +264,7 @@
             // 
             // buttonClean
             // 
-            this.buttonClean.Location = new System.Drawing.Point(25, 90);
+            this.buttonClean.Location = new System.Drawing.Point(25, 101);
             this.buttonClean.Name = "buttonClean";
             this.buttonClean.Size = new System.Drawing.Size(75, 23);
             this.buttonClean.TabIndex = 8;
@@ -255,9 +274,9 @@
             // 
             // textBoxProgress
             // 
-            this.textBoxProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxProgress.Location = new System.Drawing.Point(12, 302);
             this.textBoxProgress.MinimumSize = new System.Drawing.Size(200, 100);
             this.textBoxProgress.Multiline = true;
@@ -285,22 +304,18 @@
             this.textBoxIgnoreFolders.TabIndex = 22;
             this.textBoxIgnoreFolders.TextChanged += new System.EventHandler(this.textBoxIgnoreFolders_TextChanged);
             // 
-            // label2
+            // checkBoxCleanPackages
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(134, 45);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(106, 13);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Solution Name Base:";
-            // 
-            // textBoxSuperSolutionNameBase
-            // 
-            this.textBoxSuperSolutionNameBase.Location = new System.Drawing.Point(246, 42);
-            this.textBoxSuperSolutionNameBase.Name = "textBoxSuperSolutionNameBase";
-            this.textBoxSuperSolutionNameBase.Size = new System.Drawing.Size(161, 20);
-            this.textBoxSuperSolutionNameBase.TabIndex = 15;
-            this.textBoxSuperSolutionNameBase.TextChanged += new System.EventHandler(this.textBoxSuperSolutionNameBase_TextChanged);
+            this.checkBoxCleanPackages.AutoSize = true;
+            this.checkBoxCleanPackages.Checked = true;
+            this.checkBoxCleanPackages.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxCleanPackages.Location = new System.Drawing.Point(25, 55);
+            this.checkBoxCleanPackages.Name = "checkBoxCleanPackages";
+            this.checkBoxCleanPackages.Size = new System.Drawing.Size(112, 17);
+            this.checkBoxCleanPackages.TabIndex = 12;
+            this.checkBoxCleanPackages.Text = "Clean packages\\*";
+            this.checkBoxCleanPackages.UseVisualStyleBackColor = true;
+            this.checkBoxCleanPackages.CheckedChanged += new System.EventHandler(this.CleanPresenterParameterChanged);
             // 
             // MainForm
             // 
@@ -355,6 +370,7 @@
         private System.Windows.Forms.TextBox textBoxIgnoreFolders;
         private System.Windows.Forms.TextBox textBoxSuperSolutionNameBase;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox checkBoxCleanPackages;
     }
 }
 

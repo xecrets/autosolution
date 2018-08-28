@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with AutoSolution.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * The source is maintained at http://autosolution.codeplex.com/ please visit for
  * updates, contributions and contact with the author. You may also visit
  * http://www.axantum.com for more information about the author.
@@ -30,7 +30,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Axantum.AutoSolution.Presenter
 {
@@ -72,6 +71,8 @@ namespace Axantum.AutoSolution.Presenter
         public bool CleanBin { get; set; }
 
         public bool CleanObj { get; set; }
+
+        public bool CleanPackages { get; set; }
 
         public bool CleanSolutions { get; set; }
 
@@ -121,6 +122,10 @@ namespace Axantum.AutoSolution.Presenter
                 if (CleanObj)
                 {
                     patterns.Add(@"obj");
+                }
+                if (CleanPackages)
+                {
+                    patterns.Add(@"packages");
                 }
 
                 return patterns;
@@ -212,9 +217,6 @@ namespace Axantum.AutoSolution.Presenter
                     {
                         _backgroundWorker.ReportProgress(0, directory.FullName);
                     }
-                    else
-                    {
-                    }
                 }
             }
         }
@@ -228,6 +230,10 @@ namespace Axantum.AutoSolution.Presenter
                 return false;
             }
             if (_cleanFileSystem.IsReadOnly(directory))
+            {
+                return false;
+            }
+            if (string.Compare(directory.Name, "packages", StringComparison.OrdinalIgnoreCase) == 0 && (!directory.Parent.GetFiles("packages.config").Any() || !directory.GetDirectories().Any()))
             {
                 return false;
             }
