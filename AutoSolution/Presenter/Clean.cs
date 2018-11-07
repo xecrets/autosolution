@@ -37,9 +37,9 @@ namespace Axantum.AutoSolution.Presenter
     {
         private delegate void SourceControlPredicate(DirectoryInfo di, ref bool isControlled);
 
-        private ICleanView _cleanView;
+        private readonly ICleanView _cleanView;
         private IFileSystem _cleanFileSystem;
-        private SourceControlPredicate _isSourceControlled;
+        private readonly SourceControlPredicate _isSourceControlled;
 
         public Clean(ICleanView cleanView, IFileSystem cleanFileSystem)
         {
@@ -66,6 +66,7 @@ namespace Axantum.AutoSolution.Presenter
         {
             CleanDirectories(DirectoriesToClean);
             CleanFiles(FilesToClean);
+            _backgroundWorker.ReportProgress(100, "*** Clean! ***");
         }
 
         public bool CleanBin { get; set; }
@@ -73,6 +74,8 @@ namespace Axantum.AutoSolution.Presenter
         public bool CleanObj { get; set; }
 
         public bool CleanPackages { get; set; }
+
+        public bool CleanNodeModules { get; set; }
 
         public bool CleanSolutions { get; set; }
 
@@ -126,6 +129,10 @@ namespace Axantum.AutoSolution.Presenter
                 if (CleanPackages)
                 {
                     patterns.Add(@"packages");
+                }
+                if (CleanNodeModules)
+                {
+                    patterns.Add(@"node_modules");
                 }
 
                 return patterns;
@@ -213,7 +220,7 @@ namespace Axantum.AutoSolution.Presenter
                 DirectoryInfo[] directories = _cleanFileSystem.SearchForDirectories(rootDirectory, directorypattern, SearchOption.AllDirectories);
                 foreach (DirectoryInfo directory in directories)
                 {
-                    if (DeleteDirectoryRecursivelySelectively(directory))
+                    if (DeleteDirectoryRecursivelySelectively(directory, directory))
                     {
                         _backgroundWorker.ReportProgress(0, directory.FullName);
                     }
@@ -221,7 +228,24 @@ namespace Axantum.AutoSolution.Presenter
             }
         }
 
-        private bool DeleteDirectoryRecursivelySelectively(DirectoryInfo directory)
+        private static IList<DirectoryInfo> Parents(DirectoryInfo directory, IList<DirectoryInfo> parents)
+        {
+            directory = directory.Parent;
+            if (directory == null)
+            {
+                return parents;
+            }
+
+            do
+            {
+                parents.Add(directory);
+                directory = directory.Parent;
+            } while (directory != null);
+
+            return parents;
+        }
+
+        private bool DeleteDirectoryRecursivelySelectively(DirectoryInfo topdirectory, DirectoryInfo directory)
         {
             bool isControlled = false;
             _isSourceControlled(directory, ref isControlled);
@@ -233,7 +257,11 @@ namespace Axantum.AutoSolution.Presenter
             {
                 return false;
             }
-            if (string.Compare(directory.Name, "packages", StringComparison.OrdinalIgnoreCase) == 0 && (!directory.Parent.GetFiles("packages.config").Any() || !directory.GetDirectories().Any()))
+            if (PackagesDirectoryWithoutSubdirectories(directory))
+            {
+                return false;
+            }
+            if (BinDirectoryInNodeModulesWhenNotDeletingNodeModules(topdirectory, directory))
             {
                 return false;
             }
@@ -241,7 +269,7 @@ namespace Axantum.AutoSolution.Presenter
             DirectoryInfo[] subdirectories = _cleanFileSystem.SearchForDirectories(directory, "*", SearchOption.TopDirectoryOnly);
             foreach (DirectoryInfo subdirectory in subdirectories)
             {
-                DeleteDirectoryRecursivelySelectively(subdirectory);
+                DeleteDirectoryRecursivelySelectively(topdirectory, subdirectory);
             }
 
             FileInfo[] files = _cleanFileSystem.SearchForFiles(directory, "*", SearchOption.TopDirectoryOnly);
@@ -265,6 +293,36 @@ namespace Axantum.AutoSolution.Presenter
                 return true;
             }
             _cleanFileSystem.DeleteDirectory(directory, false);
+            return true;
+        }
+
+        private bool BinDirectoryInNodeModulesWhenNotDeletingNodeModules(DirectoryInfo topdirectory, DirectoryInfo directory)
+        {
+            if (!directory.Name.Equals("bin", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            if (topdirectory.Name.Equals("node_modules"))
+            {
+                return false;
+            }
+            if (Parents(directory, new List<DirectoryInfo>()).Any(di => di.Name.Equals("node_modules", StringComparison.OrdinalIgnoreCase)))
+            {
+                return false;
+            }
+            return false;
+        }
+
+        private static bool PackagesDirectoryWithoutSubdirectories(DirectoryInfo directory)
+        {
+            if (!directory.Name.Equals("packages", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            if (directory.GetDirectories().Any())
+            {
+                return false;
+            }
             return true;
         }
 

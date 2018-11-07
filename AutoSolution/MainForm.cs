@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with AutoSolution.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * The source is maintained at http://autosolution.codeplex.com/ please visit for
  * updates, contributions and contact with the author. You may also visit
  * http://www.axantum.com for more information about the author.
@@ -28,12 +28,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+
 using Axantum.AutoSolution.Presenter;
 
 namespace Axantum.AutoSolution
@@ -157,10 +154,10 @@ namespace Axantum.AutoSolution
 
             if (radioButtonRecursive.Checked)
             {             // Generate all auto projects
-                sm.MakeAutoProjects(delegate(SolutionGenerator.ProjectInfo pi) { return true; });
+                sm.MakeAutoProjects(delegate (SolutionGenerator.ProjectInfo pi) { return true; });
 
                 // Generate a solution per project for all projects
-                sm.MakeAutoSolutions(delegate(SolutionGenerator.ProjectInfo pi) { return true; });
+                sm.MakeAutoSolutions(delegate (SolutionGenerator.ProjectInfo pi) { return true; });
 
                 // Generate aggregate solutions in sub-directories
                 Program.MakeAggregateSolutions(sm, rootDirectory, IsProjectFileToBeIncluded);
@@ -233,6 +230,7 @@ namespace Axantum.AutoSolution
             _cleanPresenter.CleanBin = checkBoxBin.Checked;
             _cleanPresenter.CleanObj = checkBoxCleanObj.Checked;
             _cleanPresenter.CleanPackages = checkBoxCleanPackages.Checked;
+            _cleanPresenter.CleanNodeModules = checkBoxCleanNodeModules.Checked;
             _cleanPresenter.CleanSolutions = checkBoxCleanAutoSolutions.Checked;
             _cleanPresenter.RootDirectory = textBoxRootDirectory.Text;
             _cleanPresenter.IgnoreDirectories = FoldersToIgnore;

@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with AutoSolution.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * The source is maintained at http://autosolution.codeplex.com/ please visit for
  * updates, contributions and contact with the author. You may also visit
  * http://www.axantum.com for more information about the author.
@@ -25,11 +25,8 @@
 
 #endregion Coypright and License
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+
 using Axantum.AutoSolution.Presenter;
 
 namespace Axantum.AutoSolution.Implementation
@@ -40,7 +37,7 @@ namespace Axantum.AutoSolution.Implementation
 
         public DirectoryInfo[] SearchForDirectories(DirectoryInfo rootDirectory, string directoryPattern, SearchOption searchOption)
         {
-            return rootDirectory.GetDirectories(directoryPattern, searchOption);
+            return rootDirectory.Exists ? rootDirectory.GetDirectories(directoryPattern, searchOption) : new DirectoryInfo[0];
         }
 
         public FileInfo[] SearchForFiles(DirectoryInfo rootDirectory, string filePattern, SearchOption searchOption)

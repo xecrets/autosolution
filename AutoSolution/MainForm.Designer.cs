@@ -46,6 +46,7 @@
             this.checkBoxNoForceAuto = new System.Windows.Forms.CheckBox();
             this.checkBoxIncludeVb = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.checkBoxCleanPackages = new System.Windows.Forms.CheckBox();
             this.checkBoxCleanAutoSolutions = new System.Windows.Forms.CheckBox();
             this.checkBoxCleanObj = new System.Windows.Forms.CheckBox();
             this.checkBoxBin = new System.Windows.Forms.CheckBox();
@@ -53,7 +54,7 @@
             this.textBoxProgress = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxIgnoreFolders = new System.Windows.Forms.TextBox();
-            this.checkBoxCleanPackages = new System.Windows.Forms.CheckBox();
+            this.checkBoxCleanNodeModules = new System.Windows.Forms.CheckBox();
             this.tabControlFeature.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxMode.SuspendLayout();
@@ -210,6 +211,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.checkBoxCleanNodeModules);
             this.tabPage2.Controls.Add(this.checkBoxCleanPackages);
             this.tabPage2.Controls.Add(this.checkBoxCleanAutoSolutions);
             this.tabPage2.Controls.Add(this.checkBoxCleanObj);
@@ -223,12 +225,25 @@
             this.tabPage2.Text = "Clean";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // checkBoxCleanPackages
+            // 
+            this.checkBoxCleanPackages.AutoSize = true;
+            this.checkBoxCleanPackages.Checked = true;
+            this.checkBoxCleanPackages.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxCleanPackages.Location = new System.Drawing.Point(25, 52);
+            this.checkBoxCleanPackages.Name = "checkBoxCleanPackages";
+            this.checkBoxCleanPackages.Size = new System.Drawing.Size(112, 17);
+            this.checkBoxCleanPackages.TabIndex = 12;
+            this.checkBoxCleanPackages.Text = "Clean packages\\*";
+            this.checkBoxCleanPackages.UseVisualStyleBackColor = true;
+            this.checkBoxCleanPackages.CheckedChanged += new System.EventHandler(this.CleanPresenterParameterChanged);
+            // 
             // checkBoxCleanAutoSolutions
             // 
             this.checkBoxCleanAutoSolutions.AutoSize = true;
             this.checkBoxCleanAutoSolutions.Checked = true;
             this.checkBoxCleanAutoSolutions.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxCleanAutoSolutions.Location = new System.Drawing.Point(25, 78);
+            this.checkBoxCleanAutoSolutions.Location = new System.Drawing.Point(25, 96);
             this.checkBoxCleanAutoSolutions.Name = "checkBoxCleanAutoSolutions";
             this.checkBoxCleanAutoSolutions.Size = new System.Drawing.Size(234, 17);
             this.checkBoxCleanAutoSolutions.TabIndex = 11;
@@ -241,7 +256,7 @@
             this.checkBoxCleanObj.AutoSize = true;
             this.checkBoxCleanObj.Checked = true;
             this.checkBoxCleanObj.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxCleanObj.Location = new System.Drawing.Point(25, 32);
+            this.checkBoxCleanObj.Location = new System.Drawing.Point(25, 30);
             this.checkBoxCleanObj.Name = "checkBoxCleanObj";
             this.checkBoxCleanObj.Size = new System.Drawing.Size(79, 17);
             this.checkBoxCleanObj.TabIndex = 10;
@@ -264,7 +279,7 @@
             // 
             // buttonClean
             // 
-            this.buttonClean.Location = new System.Drawing.Point(25, 101);
+            this.buttonClean.Location = new System.Drawing.Point(25, 121);
             this.buttonClean.Name = "buttonClean";
             this.buttonClean.Size = new System.Drawing.Size(75, 23);
             this.buttonClean.TabIndex = 8;
@@ -304,18 +319,18 @@
             this.textBoxIgnoreFolders.TabIndex = 22;
             this.textBoxIgnoreFolders.TextChanged += new System.EventHandler(this.textBoxIgnoreFolders_TextChanged);
             // 
-            // checkBoxCleanPackages
+            // checkBoxCleanNodeModules
             // 
-            this.checkBoxCleanPackages.AutoSize = true;
-            this.checkBoxCleanPackages.Checked = true;
-            this.checkBoxCleanPackages.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxCleanPackages.Location = new System.Drawing.Point(25, 55);
-            this.checkBoxCleanPackages.Name = "checkBoxCleanPackages";
-            this.checkBoxCleanPackages.Size = new System.Drawing.Size(112, 17);
-            this.checkBoxCleanPackages.TabIndex = 12;
-            this.checkBoxCleanPackages.Text = "Clean packages\\*";
-            this.checkBoxCleanPackages.UseVisualStyleBackColor = true;
-            this.checkBoxCleanPackages.CheckedChanged += new System.EventHandler(this.CleanPresenterParameterChanged);
+            this.checkBoxCleanNodeModules.AutoSize = true;
+            this.checkBoxCleanNodeModules.Checked = true;
+            this.checkBoxCleanNodeModules.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxCleanNodeModules.Location = new System.Drawing.Point(25, 74);
+            this.checkBoxCleanNodeModules.Name = "checkBoxCleanNodeModules";
+            this.checkBoxCleanNodeModules.Size = new System.Drawing.Size(134, 17);
+            this.checkBoxCleanNodeModules.TabIndex = 13;
+            this.checkBoxCleanNodeModules.Text = "Clean node_modules\\*";
+            this.checkBoxCleanNodeModules.UseVisualStyleBackColor = true;
+            this.checkBoxCleanNodeModules.CheckedChanged += new System.EventHandler(this.CleanPresenterParameterChanged);
             // 
             // MainForm
             // 
@@ -371,6 +386,7 @@
         private System.Windows.Forms.TextBox textBoxSuperSolutionNameBase;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox checkBoxCleanPackages;
+        private System.Windows.Forms.CheckBox checkBoxCleanNodeModules;
     }
 }
 
