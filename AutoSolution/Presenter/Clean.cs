@@ -261,7 +261,11 @@ namespace Axantum.AutoSolution.Presenter
             {
                 return false;
             }
-            if (BinDirectoryInNodeModulesWhenNotDeletingNodeModules(topdirectory, directory))
+            if (SubDirectoryInNodeModules("bin", topdirectory, directory))
+            {
+                return false;
+            }
+            if (SubDirectoryInNodeModules("packages", topdirectory, directory))
             {
                 return false;
             }
@@ -296,19 +300,19 @@ namespace Axantum.AutoSolution.Presenter
             return true;
         }
 
-        private bool BinDirectoryInNodeModulesWhenNotDeletingNodeModules(DirectoryInfo topdirectory, DirectoryInfo directory)
+        private bool SubDirectoryInNodeModules(string subDirectory, DirectoryInfo topdirectory, DirectoryInfo directory)
         {
-            if (!directory.Name.Equals("bin", StringComparison.OrdinalIgnoreCase))
+            if (!directory.Name.Equals(subDirectory, StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
             if (topdirectory.Name.Equals("node_modules"))
             {
-                return false;
+                return true;
             }
             if (Parents(directory, new List<DirectoryInfo>()).Any(di => di.Name.Equals("node_modules", StringComparison.OrdinalIgnoreCase)))
             {
-                return false;
+                return true;
             }
             return false;
         }
