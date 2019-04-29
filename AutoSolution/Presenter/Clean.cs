@@ -51,6 +51,8 @@ namespace Axantum.AutoSolution.Presenter
             _backgroundWorker.WorkerReportsProgress = true;
 
             _isSourceControlled += IsSubversionControlled;
+            _isSourceControlled += IsHgControlled;
+            _isSourceControlled += IsGitControlled;
             _isSourceControlled += IsCvsControlled;
             _isSourceControlled += IsTfsControlled;
             _isSourceControlled += IsToBeIgnored;
@@ -183,6 +185,28 @@ namespace Axantum.AutoSolution.Presenter
             }
             DirectoryInfo[] subversionMarker = _cleanFileSystem.SearchForDirectories(di, ".svn", SearchOption.TopDirectoryOnly);
             isControlled = subversionMarker.Length > 0;
+            return;
+        }
+
+        private void IsHgControlled(DirectoryInfo di, ref bool isControlled)
+        {
+            if (isControlled)
+            {
+                return;
+            }
+            DirectoryInfo[] hgMarker = _cleanFileSystem.SearchForDirectories(di, ".hg", SearchOption.TopDirectoryOnly);
+            isControlled = hgMarker.Length > 0;
+            return;
+        }
+
+        private void IsGitControlled(DirectoryInfo di, ref bool isControlled)
+        {
+            if (isControlled)
+            {
+                return;
+            }
+            DirectoryInfo[] gitMarker = _cleanFileSystem.SearchForDirectories(di, ".git", SearchOption.TopDirectoryOnly);
+            isControlled = gitMarker.Length > 0;
             return;
         }
 
