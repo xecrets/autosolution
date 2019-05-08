@@ -289,6 +289,10 @@ namespace Axantum.AutoSolution.Presenter
             {
                 return false;
             }
+            if (SubDirectoryInPackages("bin", topdirectory, directory))
+            {
+                return false;
+            }
             if (SubDirectoryInNodeModules("packages", topdirectory, directory))
             {
                 return false;
@@ -322,6 +326,23 @@ namespace Axantum.AutoSolution.Presenter
             }
             _cleanFileSystem.DeleteDirectory(directory, false);
             return true;
+        }
+
+        private bool SubDirectoryInPackages(string subDirectory, DirectoryInfo topdirectory, DirectoryInfo directory)
+        {
+            if (!directory.Name.Equals(subDirectory, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            if (topdirectory.Name.Equals("packages"))
+            {
+                return true;
+            }
+            if (Parents(directory, new List<DirectoryInfo>()).Any(di => di.Name.Equals("packages", StringComparison.OrdinalIgnoreCase)))
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool SubDirectoryInNodeModules(string subDirectory, DirectoryInfo topdirectory, DirectoryInfo directory)
